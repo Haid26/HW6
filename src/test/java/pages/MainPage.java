@@ -14,6 +14,7 @@ public class MainPage extends PageBase {
         topMenu.confirmPopupLocation();
         return this;
     }
+
     public MainPage acceptCookie(){
         acceptCookieButton.click();
         return this;

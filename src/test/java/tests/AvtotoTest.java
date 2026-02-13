@@ -1,5 +1,6 @@
 package tests;
 
+import com.codeborne.selenide.Selenide;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import pages.*;
@@ -23,6 +24,7 @@ public class AvtotoTest extends TestBase {
     void checkAvailableCities(Cities city) {
         MainPage mainPage = new MainPage();
         mainPage.openPage()
+                .hideAllBanners()
                 .changeCity(city);
 
         mainPage.checkCityChanged(city);
@@ -42,12 +44,13 @@ public class AvtotoTest extends TestBase {
     void checkInstrumentFilter(String type, String producer){
         InstrumentPage instrumentPage = new InstrumentPage();
         instrumentPage.openPage()
+                .acceptCookie()
                 .setInstrumentType(type);
 
         instrumentPage.checkBrandIsThere(producer);
 
         //без sleep срабатывает бан запросов по IP против DDoS
-        sleep(2000);
+        //sleep(2000);
     }
 
     static Stream<Arguments> carCatalogShouldBeOnEachPage(){
@@ -66,10 +69,16 @@ public class AvtotoTest extends TestBase {
     @ParameterizedTest(name="для страницы {0}")
     @DisplayName("Проверка наличия каталога автомобилей")
     void carCatalogShouldBeOnEachPage(PageBase page, List<String> carBrands){
-        page.openPage();
+        page.openPage()
+                .acceptCookies();
 
         page.checkCarBrands(carBrands);
+        //обход бана по айпи за слишком частые запросы
+        //sleep(2000);
+    }
 
-        sleep(2000);
+    @AfterEach
+    void afterEach(){
+        Selenide.closeWebDriver();
     }
 }

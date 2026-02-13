@@ -26,4 +26,9 @@ public class InstrumentPage extends PageBase{
         firstElementBrand.shouldHave(text(brand));
         return this;
     }
+
+    public InstrumentPage acceptCookie(){
+        acceptCookies();
+        return this;
+    }
 }

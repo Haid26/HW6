@@ -11,8 +11,6 @@ public class TestBase {
         Configuration.baseUrl = "https://avtoto.ru";
         Configuration.pageLoadStrategy = "eager";
         Configuration.timeout = 5000;
-        MainPage mainPage = new MainPage();
-        mainPage.openPage().hideAllBanners();
     }
 
 }
